@@ -19,6 +19,10 @@ public class Catmul : MonoBehaviour
     public float alpha = 0.5f;
     public GameObject RoadPrefab;
     int pointIndex;
+
+    //line renderer
+    LineRenderer line;
+
     public int spc = 320;
     public float trackwidth = 200.0f;
     public void Start()
@@ -104,6 +108,17 @@ public class Catmul : MonoBehaviour
             mc.sharedMesh = null;
             mc.sharedMesh = mesh;
         }
+
+        //Gets line and offsets it
+        line = GetComponent<LineRenderer>();
+        line.positionCount = spc;
+        Vector3 offset = new Vector3(0, 0.02f, 0);
+
+        for (int i = 0; i < spc; i++)
+        {
+            line.SetPosition(i, sp[i].transform.position + offset);
+        }
+
     }
     int getIndex(int index)
     {

@@ -117,5 +117,6 @@ public class Boid : MonoBehaviour {
         direction = SwarmDir + Cohesion * flock.cohesionWeight + Alignment * flock.alignmentWeight + Avoidance * flock.avoidanceWeight;
         // then renormalize again
         direction = Vector3.Normalize(direction);
+        direction.y = 0.0f;
     }
 }
