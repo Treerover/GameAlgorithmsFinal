@@ -1,0 +1,50 @@
+2 Arena setup. 
+ADAM - 1 I’ve given you code that generates one rounded rectangle track – build me 4 more that overlap in a clover type pattern.  The central track should cross each of the others in two places. The four outer track should not cross each other. Use simple math to sort out where they go so that they overlap at the control points.
+AUSTIN - 1 Add a line renderer component to the Spline prefab, and have it connect all the points (but slightly higher (y of 0.01f.  this will draw the centre line for all the road segments.
+
+ 
+
+6 Player controlled swarm
+AUSTIN - 1 You have a prefab for each color of swarm leader.  Pick one of them, and start it on the central track – this is the player. 
+ Since the tracks are created dynamically, you’ll want to get the leader instantiated as well. The place to do this is in the track generation script.
+
+AUSTIN - 1 You will need to add a flock script to the swarm leader, to generate the initial cloud of boids.  
+Ensure that the boids stay in the X-Z plane, but slightly above it (say 0.05 unitis above the track. Have the flock swarm point be the swarm leader.
+
+AUSTIN - 2 Create a script that will move the swarm leader from point to point along the track.  The Catmull code has been modified to generate mesh plates for the roadway.
+  This code  can be shared between the human and AI flocks.  A sequence of Move To, select next waypoint, and player change lane should do it.
+
+AUSTIN - 1 Tweak parameters on the flock to keep it more or less moving with the swarm leader
+AUSTIN - 1 Finally, add one more script on the player that looks for W A and D keys – those should write into a blackboard key on the swarm leaders behavior tree
+ Look at the player change lane code to see what it’s expecting.  We’re using the control pattern to decouple movement from what is making the decision to move.
+
+ 
+
+6 AI Swarms
+AUSTIN - 2 Instantiate a different swarm leader prefab on each of the other tracks.  You’ll need to also add the movement script to them. 
+ Do NOT add the script that watches for key presses to turn.  For now, get them moving on their outer tracks.  Add a flock to each of them. 
+ Remember to customize each flock to use the appropriate coloured boid.
+
+AUSTIN - 2 Add basic dumb AI to the swarm leaders of the AI Swarms. This needs to at a minimum be a sequence of Wait 3 seconds, 
+pick one of the three directions to request to turn in and write that into the appropriate blackboard key on the OTHER tree that is driving the swarm leader around.  
+This task does NOT exist, so you’ll need to build both the task, and the tree that will contain it.
+
+AUSTIN - 2 Dead Boids.  The track segments have mesh colliders on them, with a layer type of “Track”. 
+ Add code to the Boid Script in update that checks to see if a boid is no longer over the track using a raycast. If it’s not, turn off the line renderer on the boid,
+ spawn a wipeout prefab at the boids location, and remove the boid from the flock (Wipeout is an expanding white sphere that simulates the boid blowing up)
+
+ 
+
+1 Game over detection
+AUSTIN - If the last boid off a flock is removed, then destroy the swarm leader as well.  Unless it’s the player, then shut the whole game down.  You need to do this differently in the editor vs in a created application. Here is some example code, and flocks have a player Boolean that you need to set to indicate WHO the special flock is.
+
+5 Shooting
+ADAM - 2 The boids need to have AI running that will run a sequence of Detect Target, Zap Target and DamageBoid.  These three tasks are not given to you.
+ Be caureful, and check the boid for null when you get it out of the blackboard – it may have fallen off the track in between AI calls.
+
+ADAM - 1 Detect target needs to use a raycast, and then write the game object it found into a “Hit” blackboard entry.  The raycast 
+needs to use layer masks to avoid friendly fire. Each flock knows about it’s mask names via the mask variable.
+
+ADAM - 1 Zap target will pull that hit object out, and activate the line renderer to draw a line from the boid to the target.
+
+ADAM - 1 Damage boid needs to increase the speed and decrease the turn speed of the boid that was hit.

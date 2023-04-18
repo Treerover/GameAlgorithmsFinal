@@ -27,7 +27,10 @@ public class Flock : MonoBehaviour {
         target = gameObject;
         boids = new List<GameObject>();
         deadBoids = new List<GameObject>();
+
+        //Gets layermask from the string array
         LayerMask Layermask = LayerMask.GetMask(mask);
+
         for (int i = 0; i < numberOfBoids; i++)
         {
             Vector3 pos = transform.position + Random.insideUnitSphere * spawnRadius;
@@ -36,12 +39,16 @@ public class Flock : MonoBehaviour {
             boids.Add(Instantiate(boidPrefab, pos,rot));
             boids[i].GetComponent<Boid>().flock = this;
 
-            //BUG HERE ????? FIX????? !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            //BUG HERE ????? FIX????? !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-           // Shooting ShootTree = boids[i].GetComponent<Shooting>();
+          //  BUG HERE ????? FIX????? !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+          //  BUG HERE ????? FIX????? !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+            Shooting ShootTree = boids[i].GetComponent<Shooting>();
+            //Sets value of the layer mask in the blackboard
+            ShootTree.SetValue("Mask", Layermask);
+
+
            // ShootTree.SetValue("Mask", Layermask);
-            //BUG HERE ????? FIX????? !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            //BUG HERE ????? FIX????? !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+          //  BUG HERE ????? FIX????? !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+          //  BUG HERE ????? FIX????? !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
             // TODO - Configure the combat AI on the boid we just built.

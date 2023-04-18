@@ -9,9 +9,9 @@ public class ZapTarget : Task
 
     public override NodeResult Execute()
     {
-        target = (GameObject)tree.GetValue(targetKey);
+        target = (GameObject)tree.GetValue("Target");
         
-        if (target == null )
+        if (target != null )
         {
             LineRenderer line = tree.gameObject.GetComponent<LineRenderer>();
             line.positionCount = 2;

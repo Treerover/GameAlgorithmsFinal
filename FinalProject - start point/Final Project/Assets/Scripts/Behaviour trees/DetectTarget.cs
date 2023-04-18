@@ -10,7 +10,7 @@ public class DetectTarget : Task
     {
         LayerMask layerm = (LayerMask)tree.GetValue("Mask");
         RaycastHit hit;
-        if (Physics.Raycast(tree.gameObject.transform.position, tree.gameObject.transform.forward, out hit, 20.0f, layerm))
+        if (Physics.Raycast(tree.gameObject.transform.position, tree.gameObject.transform.forward, out hit, 25.0f, layerm))
         {
             tree.SetValue("Target", hit.transform.gameObject);
             return NodeResult.SUCCESS;

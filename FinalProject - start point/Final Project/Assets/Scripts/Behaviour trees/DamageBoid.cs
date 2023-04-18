@@ -13,8 +13,8 @@ public class DamageBoid : Task
            Boid boid = target.GetComponent<Boid>();
             if (boid != null)
             {
-                boid.speed *= 1.1f;
-                boid.turnspeed *= 0.9f;
+                boid.speed *= 1.05f;
+                boid.turnspeed *= 0.6f;
 
             }
 
